@@ -22,12 +22,10 @@ export const signup = async (req, res) => {
 
     // Validar nombre (máximo 40 caracteres, sin caracteres especiales)
     if (nombre.length > 40 || !/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(nombre)) {
-      return res
-        .status(400)
-        .json({
-          message:
-            "El nombre debe tener máximo 40 caracteres y sin caracteres especiales",
-        });
+      return res.status(400).json({
+        message:
+          "El nombre debe tener máximo 40 caracteres y sin caracteres especiales",
+      });
     }
 
     // Validar teléfono (10 dígitos)
@@ -79,8 +77,11 @@ export const signup = async (req, res) => {
       email,
       password,
       tipoUsuario: tipoUsuario || "estudiante",
-      clasesId
     });
+
+    if ((tipoUsuario || "estudiante") === "estudiante") {
+      newUser.clasesMatriculadas = [];
+    }
 
     await newUser.save();
 
@@ -217,6 +218,3 @@ export const getPerfil = async (req, res) => {
     res.status(401).json({ message: "No autorizado" });
   }
 };
-
-
-// Obtener las clases por id usuario

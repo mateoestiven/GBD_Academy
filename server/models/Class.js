@@ -1,14 +1,18 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
 const classSchema = new mongoose.Schema({
-  codigo: { type: String, default: "" },
-  nombre: { type: String, default: "" },
-  profesor: { type: String, default: "" },
-  horario: { type: String, default: "" },
-  cupos_disponibles: { type: Number, default: 0 },
-  estado: { type: String, default: "Disponible" }
-}, { strict: false, timestamps: true }); // 'strict: false' es la clave aquí
+  colorIdx: { type: Number, required: true },
+  code: { type: String, required: true, unique: true },
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  professor: { type: String, required: true },
+  credits: { type: Number, required: true },
+  schedule: [{
+    day: String,
+    time: String,
+    room: String
+  }],
+  period: { type: String, enum: ['morning', 'afternoon', 'evening'], required: true }
+}, { timestamps: true });
 
-const Class = mongoose.model('Class', classSchema);
-export default Class;
-  
+module.exports = mongoose.model('Class', classSchema);
