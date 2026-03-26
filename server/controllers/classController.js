@@ -67,14 +67,13 @@ export const deleteClass = async (req, res) => {
 };
 
 // Obtener todas las clases del usuario autenticado
-export  const getUserClasses = async (req, res) => {
+export const getUserClasses = async (req, res) => {
   try {
-    const userId = req.user.id; // Asumiendo que tienes autenticación con JWT
+    const userId = req.user.id;
 
-    // Buscar el usuario y popular las clases matriculadas
     const user = await User.findById(userId)
       .populate("clasesMatriculadas")
-      .select("-password"); // Excluir la contraseña
+      .select("-password");
 
     if (!user) {
       return res.status(404).json({
@@ -83,60 +82,16 @@ export  const getUserClasses = async (req, res) => {
       });
     }
 
-    res.status(200).json({
+    res.json({
       success: true,
-      data: user.clasesMatriculadas,
-      total: user.clasesMatriculadas.length,
+      classes: user.clasesMatriculadas,
     });
   } catch (error) {
-    console.error("Error al obtener clases del usuario:", error);
+    console.error("errror : " + error);
     res.status(500).json({
       success: false,
-      message: "Error al obtener las clases",
-      error: error.message,
+      message: "Error interno",
     });
   }
 };
 
-// Obtener una clase específica del usuario
-export  const getUserClassById = async (req, res) => {
-  try {
-    const userId = req.user.id;
-    const { classId } = req.params;
-
-    // Verificar que el usuario existe y tiene la clase matriculada
-    const user = await User.findOne({
-      _id: userId,
-      clasesMatriculadas: classId,
-    });
-
-    if (!user) {
-      return res.status(404).json({
-        success: false,
-        message: "Usuario no encontrado o no está matriculado en esta clase",
-      });
-    }
-
-    // Obtener la información completa de la clase
-    const classData = await Class.findById(classId);
-
-    if (!classData) {
-      return res.status(404).json({
-        success: false,
-        message: "Clase no encontrada",
-      });
-    }
-
-    res.status(200).json({
-      success: true,
-      data: classData,
-    });
-  } catch (error) {
-    console.error("Error al obtener la clase:", error);
-    res.status(500).json({
-      success: false,
-      message: "Error al obtener la clase",
-      error: error.message,
-    });
-  }
-};

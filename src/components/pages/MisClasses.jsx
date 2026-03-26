@@ -364,22 +364,36 @@ export default function MisClases() {
   const [filter, setFilter] = useState("all");
   const [activeClass, setActiveClass] = useState(null);
 
-  useEffect(() => {
-    // ── Descomentar para conectar a tu API real ──
-    // fetch(`${API_URL}/clases/mis-clases`, {
-    //   headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-    // })
-    //   .then(res => res.json())
-    //   .then(data => setClasses(data.map((c, i) => ({ ...c, colorIdx: i % COLORS.length }))))
-    //   .catch(console.error)
-    //   .finally(() => setLoading(false));
+useEffect(() => {
+  const fetchClasses = async () => {
+    try {
+      const res = await fetch('http://localhost:5000/api/classes/mis-clases', {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`, 
+        },
+      });
 
-    // ── Datos de ejemplo ──
-    setTimeout(() => {
-      setClasses(MOCK_CLASSES);
+      const data = await res.json();
+
+      if (data.success) {
+        const classesWithColor = data.classes.map((c, i) => ({
+          ...c,
+          colorIdx: i % COLORS.length,
+        }));
+
+        setClasses(classesWithColor);
+      }
+    } catch (error) {
+      console.error("Error cargando clases:", error);
+    } finally {
       setLoading(false);
-    }, 500);
-  }, []);
+    }
+  };
+
+  fetchClasses();
+}, []);
 
   const FILTERS = [
     { key: "all", label: "Todas" },

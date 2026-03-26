@@ -44,15 +44,12 @@ const userSchema = new mongoose.Schema(
       enum: ["estudiante", "profesor"],
       required: true,
     },
-    clasesMatriculadas: {
-      type: [
-        {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Class",
-        },
-      ],
-      default: [],
-    },
+    clasesMatriculadas: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Clase",
+      },
+    ],
   },
   {
     timestamps: true,

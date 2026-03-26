@@ -1,11 +1,12 @@
 import express from 'express';
-import { getClasses, createClass, getClassById, updateClass, deleteClass } from '../controllers/classController.js';
+import { authMiddleware } from '../../middlewares/authMiddleware.js';
+import { getClasses, createClass, getClassById, updateClass, deleteClass , getUserClasses } from '../controllers/classController.js';
 
 const router = express.Router();
 
 router.get('/', getClasses);
 router.post('/', createClass);
-router.get('/:id', getClassById);
+router.get("/mis-clases", authMiddleware, getUserClasses);
 router.put('/:id', updateClass);
 router.delete('/:id', deleteClass);
 

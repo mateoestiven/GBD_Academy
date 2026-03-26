@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const classSchema = new mongoose.Schema({
   colorIdx: { type: Number, required: true },
-  code: { type: String, required: true, unique: true },
+  code: {  String },
   name: { type: String, required: true },
   description: { type: String, required: true },
   professor: { type: String, required: true },
@@ -21,4 +21,4 @@ const classSchema = new mongoose.Schema({
   },
 }, { timestamps: true });
 
-export default mongoose.model("Class", classSchema);
+export default mongoose.model("Clase", classSchema);

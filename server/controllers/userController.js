@@ -124,7 +124,8 @@ export const login = async (req, res) => {
         .json({ message: "Correo y contraseña son requeridos" });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email })
+     .populate("clasesMatriculadas");
     if (!user) {
       return res
         .status(404)
@@ -153,6 +154,7 @@ export const login = async (req, res) => {
         nombre: user.nombre,
         email: user.email,
         tipoUsuario: user.tipoUsuario,
+        clases: user.clasesMatriculadas,
       },
     });
   } catch (error) {
