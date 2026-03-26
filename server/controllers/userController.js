@@ -13,11 +13,11 @@ export const signup = async (req, res) => {
         .json({ message: "Todos los campos son obligatorios" });
     }
 
-    // Validar documento (11 dígitos)
-    if (!/^\d{11}$/.test(documento)) {
+    // Validar documento (10 dígitos)
+    if (!/^\d{10}$/.test(documento)) {
       return res
         .status(400)
-        .json({ message: "El documento debe tener exactamente 11 dígitos" });
+        .json({ message: "El documento debe tener exactamente 10 dígitos" });
     }
 
     // Validar nombre (máximo 40 caracteres, sin caracteres especiales)
@@ -79,6 +79,7 @@ export const signup = async (req, res) => {
       email,
       password,
       tipoUsuario: tipoUsuario || "estudiante",
+      clasesId
     });
 
     await newUser.save();
@@ -216,3 +217,6 @@ export const getPerfil = async (req, res) => {
     res.status(401).json({ message: "No autorizado" });
   }
 };
+
+
+// Obtener las clases por id usuario

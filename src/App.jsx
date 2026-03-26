@@ -21,7 +21,7 @@ function App() {
         <Route path="/materias" element={<VerMaterias />} />
         <Route path="/MisClases" element={<MisClases/>}/>
       </Routes>
-      <Footer />
+     
     </>
   );
 }

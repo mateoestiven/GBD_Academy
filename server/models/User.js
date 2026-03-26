@@ -6,8 +6,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-    length: 11,
-    match: /^\d{11}$/, // Solo números, longitud 11
+    length: 10,
+    match: /^\d{10}$/, // Solo números, longitud 10
     trim: true
   },
   nombre: {
@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
   },
   tipoUsuario: {
     type: String,
-    enum: ['estudiante', 'docente', 'administrador'],
+    enum: ['estudiante', 'profesor', 'administrador'],
     default: 'estudiante'
   }
 }, {
