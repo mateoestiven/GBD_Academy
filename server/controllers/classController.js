@@ -1,5 +1,5 @@
 import Class from "../models/Class.js";
-const User = require("../models/User");
+import User from "../models/User.js";
 
 // Obtener todas las clases (Para el Home y Gestión)
 export const getClasses = async (req, res) => {

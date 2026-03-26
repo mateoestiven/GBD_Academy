@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
 const classSchema = new mongoose.Schema({
   colorIdx: { type: Number, required: true },
@@ -7,12 +7,18 @@ const classSchema = new mongoose.Schema({
   description: { type: String, required: true },
   professor: { type: String, required: true },
   credits: { type: Number, required: true },
-  schedule: [{
-    day: String,
-    time: String,
-    room: String
-  }],
-  period: { type: String, enum: ['morning', 'afternoon', 'evening'], required: true }
+  schedule: [
+    {
+      day: String,
+      time: String,
+      room: String,
+    },
+  ],
+  period: {
+    type: String,
+    enum: ["morning", "afternoon", "evening"],
+    required: true,
+  },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Class', classSchema);
+export default mongoose.model("Class", classSchema);
